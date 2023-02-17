@@ -21,8 +21,8 @@ impl InternalLogger {
 // If log_callback is not set, the result_callback is used instead.
 #[no_mangle]
 pub extern "C" fn start(
-    size: u64,
     data: *mut u8,
+    size: u64,
     result_callback: extern "C" fn(*mut u8, u64),
     log_callback: Option<extern "C" fn(*mut u8, u64)>,
 ) -> u32 {
