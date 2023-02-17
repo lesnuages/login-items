@@ -15,12 +15,16 @@ impl InternalLogger {
     }
 }
 
+// start extracts the args from the data pointer and calls parse_and_run.
+// Output is returned via the result_callback. If log_callback is set, it is
+// used to return errors that occur during execution.
+// If log_callback is not set, the result_callback is used instead.
 #[no_mangle]
 pub extern "C" fn start(
     size: u64,
     data: *mut u8,
     result_callback: extern "C" fn(*mut u8, u64),
-    log_callback: extern "C" fn(*mut u8, u64),
+    log_callback: Option<extern "C" fn(*mut u8, u64)>,
 ) -> u32 {
     // Extract arguments to a vector
     let mut dst_vec = Vec::<u8>::with_capacity(size as usize);
@@ -30,7 +34,13 @@ pub extern "C" fn start(
     }
     let args_str = String::from_utf8_lossy(&dst_vec);
     // Setup logger
-    let logger = InternalLogger { log_callback };
+    let mut log_cb = result_callback;
+    if let Some(f) = log_callback {
+        log_cb = f;
+    }
+    let logger = InternalLogger {
+        log_callback: log_cb,
+    };
 
     let out: String = match parse_and_run(&args_str, &logger) {
         Ok(output) => output,
