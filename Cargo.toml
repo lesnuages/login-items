@@ -1,0 +1,28 @@
+[package]
+name = "login-items"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "loginitems"
+path = "src/lib.rs"
+crate-type=["cdylib"]
+
+[[bin]]
+name = "loginitems"
+path = "src/main.rs"
+
+[dependencies]
+core-services = "0.2.0"
+core-foundation = "0.9.1"
+urlencoding = "2.1.0"
+shellwords = "1.1.0"
+clap = "2.3.3"
+
+[profile.release]
+opt-level = "z"
+panic = "abort"
+lto = true
+codegen-units = 1
