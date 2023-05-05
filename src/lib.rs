@@ -46,6 +46,7 @@ pub extern "C" fn start(
         Ok(output) => output,
         Err(e) => format!("{}", e),
     };
+    println!("[rust] output: {}", out);
     result_callback(out.as_ptr() as *mut u8, out.len() as u64);
     return 0;
 }
