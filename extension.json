@@ -5,13 +5,27 @@
 	"extension_author": "lesnuages",
 	"original_author": "lesnuages",
 	"repo_url": "https://github.com/sliverarmory/loginitems",
-	"help": "Interact with login items",
-	"entrypoint": "start",
-	"files": [
-		{
-			"os": "darwin",
-			"arch": "arm64",
-			"path": "libloginitems.dylib"
-		}
+	"commands": [
+			{
+				"command_name": "login-items",
+				"help": "login-items",
+				"entrypoint": "start",
+				"files": [
+					{
+						"os": "darwin",
+						"arch": "arm64",
+						"path": "libloginitems.dylib"
+					}
+				],
+				"arguments": [
+					{
+						"type":"string",
+						"name": "subcommand",
+						"desc": "list, add, rm",
+						"optional": false
+					}
+
+				]
+			}
 	]
 }
